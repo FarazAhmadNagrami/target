@@ -3,6 +3,8 @@ import { useStore } from '../store/useStore';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { loadFromSupabase, saveToSupabase, subscribeToStoreChanges } from '../lib/sync';
+import { useDynamicFavicon } from '../lib/favicon';
+import { useTotalAssets } from '../store/useStore';
 import type { User } from '@supabase/supabase-js';
 
 const NAV_ITEMS = [
@@ -17,6 +19,8 @@ const NAV_ITEMS = [
 
 export default function Layout() {
   const { darkMode, toggleDarkMode } = useStore();
+  const totalAssets = useTotalAssets();
+  useDynamicFavicon(totalAssets);
   const [user, setUser]     = useState<User | null>(null);
   const [syncing, setSyncing] = useState(false);
   const navigate            = useNavigate();
